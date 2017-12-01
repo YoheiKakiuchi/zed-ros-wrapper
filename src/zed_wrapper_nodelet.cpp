@@ -593,6 +593,7 @@ namespace zed_wrapper {
                         // Transform ZED pose in TF2 Transformation
                         tf2::Transform camera_transform;
                         geometry_msgs::Transform c2s;
+#if 0
                         sl::Translation translation = pose.getTranslation();
                         c2s.translation.x = translation(2);
                         c2s.translation.y = -translation(0);
@@ -607,6 +608,22 @@ namespace zed_wrapper {
                         base_transform = base_to_sensor * camera_transform * base_to_sensor.inverse();
                         // Publish odometry message
                         publishOdom(base_transform, pub_odom, odometry_frame_id, t);
+#endif
+                        // just publish ZED frame
+                        sl::Translation translation = pose.getTranslation();
+                        c2s.translation.x = translation(0);
+                        c2s.translation.y = translation(1);
+                        c2s.translation.z = translation(2);
+                        sl::Orientation quat = pose.getOrientation();
+                        c2s.rotation.x = quat(0);
+                        c2s.rotation.y = quat(1);
+                        c2s.rotation.z = quat(2);
+                        c2s.rotation.w = quat(3);
+                        tf2::fromMsg(c2s, camera_transform);
+                        // Transformation from camera sensor to base frame
+                        //base_transform = base_to_sensor * camera_transform * base_to_sensor.inverse();
+                        // Publish odometry message
+                        publishOdom(camera_transform, pub_odom, odometry_frame_id, t);
                     }
 
                     // Publish odometry tf only if enabled
