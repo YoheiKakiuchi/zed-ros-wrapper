@@ -623,7 +623,7 @@ namespace zed_wrapper {
                         // Transformation from camera sensor to base frame
                         base_transform = base_to_sensor * camera_transform * base_to_sensor.inverse();
                         // Publish odometry message
-                        publishOdom(camera_transform, pub_odom, odometry_frame_id, t);
+                        publishOdom(base_transform, pub_odom, odometry_frame_id, t);
                     }
 
                     // Publish odometry tf only if enabled
