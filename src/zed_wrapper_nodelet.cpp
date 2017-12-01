@@ -621,7 +621,7 @@ namespace zed_wrapper {
                         c2s.rotation.w = quat(3);
                         tf2::fromMsg(c2s, camera_transform);
                         // Transformation from camera sensor to base frame
-                        //base_transform = base_to_sensor * camera_transform * base_to_sensor.inverse();
+                        base_transform = base_to_sensor * camera_transform * base_to_sensor.inverse();
                         // Publish odometry message
                         publishOdom(camera_transform, pub_odom, odometry_frame_id, t);
                     }
