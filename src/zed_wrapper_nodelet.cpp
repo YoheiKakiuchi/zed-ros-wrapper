@@ -340,6 +340,10 @@ namespace zed_wrapper {
             int height = zed->getResolution().height;
 
             sl::CameraInformation zedParam = zed->getCameraInformation();
+            std::cerr << "T" << std::endl;
+            std::cerr << T[0] << std::endl;
+            std::cerr << T[1] << std::endl;
+            std::cerr << T[2] << std::endl << std::endl;
 
             float baseline = zedParam.calibration_parameters.T[0] * 0.001; // baseline converted in meters
 
